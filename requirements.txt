@@ -1,0 +1,2 @@
+applauncher==2.0
+motor==2.3.0

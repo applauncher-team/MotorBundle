@@ -1,33 +1,3 @@
-# Motor Bundle
-
-Motor client provider for applauncher 
-
-Installation
-------------
-```bash
-pip install motor_bundle  
-```
-Then add to your main.py
-```python
-import motor_bundle
-
-bundle_list = [
-    motor_bundle.MotorBundle(),
-]
-```
-
-Configuration
--------------
-Currently just the connection uri, for example
-```yml
-motor:
-  uri: 'mongodb://localhost/default'
-```
-
-Usage
------
-Just inject and use it as a regular motor client. Check `example.py` for more details
-```python
 from applauncher import Kernel, event
 from motor_bundle import MotorBundle
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -53,5 +23,3 @@ class ExampleBundle:
 
 with Kernel(bundles=[MotorBundle(), ExampleBundle()], environment="DEV") as kernel:
     kernel.wait()
-```
-More information in the [motor](https://motor.readthedocs.io) documentation
