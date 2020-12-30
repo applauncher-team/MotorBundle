@@ -6,7 +6,7 @@ with open('requirements.txt') as fp:
 setup(
     name='motor_bundle',
     packages=find_packages(),
-    version='1.0',
+    version='1.1',
     description='Motor support for applauncher',
     author='Alvaro Garcia Gomez',
     author_email='maxpowel@gmail.com',

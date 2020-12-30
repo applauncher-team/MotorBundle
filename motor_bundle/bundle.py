@@ -9,8 +9,8 @@ class MotorConfig(BaseModel):
 
     @validator('uri')
     def uri_validator(cls, v):
-        if not v.startswith('mongodb://'):
-            raise ValueError('Uri should starts with mongodb://')
+        if not v.startswith('mongodb'):
+            raise ValueError('Uri should starts with mongodb')
         return v
 
 
