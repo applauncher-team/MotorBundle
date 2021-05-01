@@ -1,8 +1,8 @@
-from applauncher.event import ConfigurationReadyEvent
-from dependency_injector import providers
-
+from applauncher.applauncher import Configuration
+from dependency_injector import providers, containers
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, validator
+
 
 class MotorConfig(BaseModel):
     uri: str
@@ -14,22 +14,21 @@ class MotorConfig(BaseModel):
         return v
 
 
+class MotorContainer(containers.DeclarativeContainer):
+    config = providers.Dependency(instance_of=MotorConfig)
+    configuration = Configuration()
+    client = providers.Singleton(
+        AsyncIOMotorClient,
+        configuration.provided.motor.uri
+    )
+
+
 class MotorBundle:
     def __init__(self):
         self.config_mapping = {
             "motor": MotorConfig
         }
 
-        self.event_listeners = [
-            (ConfigurationReadyEvent, self.configuration_ready),
-        ]
-
-        self.injection_bindings = {}
-
-    def configuration_ready(self, event):
-        config = event.configuration.motor
-
-        self.injection_bindings[AsyncIOMotorClient] = providers.Singleton(
-            AsyncIOMotorClient,
-            config.uri
-        )
+        self.injection_bindings = {
+            'motor': MotorContainer
+        }
